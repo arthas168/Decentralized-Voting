@@ -1,0 +1,78 @@
+body{
+    background: #0F2027;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.candidates-list{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 95%;
+    margin: 0 auto;
+    justify-content: space-between;
+    margin-top:5rem;
+}
+
+.candidates-list img{
+    width: 39rem;
+    height: 29rem;
+}
+
+
+.candidates-list section{
+    position: relative;
+}
+
+button {
+    width: 15rem;
+    padding: 1rem 2rem;
+    border-radius: 0.25rem;
+    border-style: none;
+    position:absolute;
+    left: 3rem;
+    top: 15rem;
+    box-shadow: darkgray;
+}
+
+section button span{
+    color:white;
+    font-size: 18px;
+}
+
+section:nth-child(1) button{
+    background: red;
+    border: 2px solid white;
+}
+
+section:nth-child(1) button:hover{
+    background: red;
+    border: 2px solid red;
+}
+
+section:nth-child(2) button{
+    background: dodgerblue;
+    border: 2px solid white;
+}
+
+section:nth-child(2) button:hover{
+    background: dodgerblue;
+    border: 2px solid dodgerblue;
+}
+
+button:hover{
+    cursor:pointer;
+}
+
+button:hover span {
+    display: none;
+}
+
+button:hover:before {
+    content: "Vote";
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
