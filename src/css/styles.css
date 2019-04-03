@@ -1,27 +1,56 @@
-body{
-    background: #0F2027;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+body {
+    background: #0F2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
 
-.candidates-list{
+.countdown-timer, .start-btn-div, .calculating-result-div, .resetting-div{
+    margin-top: 3rem;
+    background-color: #419D78;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: -3rem;
+    padding: .5rem;
+}
+
+.calculating-result-div{
+    background-color: red;
+}
+
+.start-btn-div span{
+    border: 2px solid white;
+    cursor: pointer;
+}
+
+.resetting-div{
+    background-color: gold;
+}
+
+.start-btn-div span:hover{
+    border: 2px solid #419D78;
+    background-color: white;
+    cursor: pointer;
+    color: #419D78;
+}
+
+.candidates-list {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     width: 95%;
-    margin: 0 auto;
     justify-content: space-between;
-    margin-top:5rem;
+    margin: 5rem auto 0;
 }
 
-.candidates-list img{
+.candidates-list img {
     width: 39rem;
     height: 29rem;
 }
 
 
-.candidates-list section{
+.candidates-list section {
     position: relative;
 }
 
@@ -30,39 +59,55 @@ button {
     padding: 1rem 2rem;
     border-radius: 0.25rem;
     border-style: none;
-    position:absolute;
+    position: absolute;
     left: 3rem;
     top: 15rem;
     box-shadow: darkgray;
 }
 
-section button span{
-    color:white;
+.result {
+    top:.5rem;
+    padding: .5rem .5rem;
+}
+
+.reset {
+    top: .5rem;
+    padding: .5rem .5rem;
+    left: 20rem;
+}
+
+
+.start {
+    padding: .5rem;
+    left: 15rem;
+    top: 17.5rem;
+}
+
+section button span {
+    color: white;
     font-size: 18px;
 }
 
-section:nth-child(1) button{
+section:nth-child(1) button {
     background: red;
     border: 2px solid white;
 }
 
-section:nth-child(1) button:hover{
+section:nth-child(1) button:hover {
     background: red;
-    border: 2px solid red;
 }
 
-section:nth-child(2) button{
+section:nth-child(2) button {
     background: dodgerblue;
     border: 2px solid white;
 }
 
-section:nth-child(2) button:hover{
+section:nth-child(2) button:hover {
     background: dodgerblue;
-    border: 2px solid dodgerblue;
 }
 
-button:hover{
-    cursor:pointer;
+button:hover {
+    cursor: pointer;
 }
 
 button:hover span {
