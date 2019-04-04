@@ -84,11 +84,11 @@ contract Voting {
        voted[msg.sender] = true;
    }
 
-   function getTrumpVotes() VoteEnded public view returns(uint256) {
+   function getCandidate1Votes() VoteEnded public view returns(uint256) {
        return CandidateLib.getVotes(candidate1);
    }
 
-   function getHillaryVotes() VoteEnded public view  returns(uint256) {
+   function getCandidate2Votes() VoteEnded public view  returns(uint256) {
        return CandidateLib.getVotes(candidate2);
    }
 

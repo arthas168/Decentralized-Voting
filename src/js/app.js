@@ -4,9 +4,46 @@ $(document).ready(function () {
     let hillaryVotes = 0;
 
     //contract info
-    const ContractAddress = "0xEedfc6F577731b4B4D51D53fDC7c6837e6aa9A91"; //Ropsten contract address
+    const ContractAddress = "0xC224072c1E1C158cDd80Cba4894A481fdE75A2E8"; //Ropsten contract address
 
     const ContractABI = [
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getIsVotingInitiated",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "startVote",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getCandidate1Votes",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
         {
             "constant": false,
             "inputs": [],
@@ -23,63 +60,6 @@ $(document).ready(function () {
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "startVote",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "constructor"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getHillaryVotes",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getIsVotingInitiated",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "getTrumpVotes",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -114,6 +94,26 @@ $(document).ready(function () {
             "payable": false,
             "stateMutability": "view",
             "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getCandidate2Votes",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
         }
     ];
 
@@ -268,11 +268,11 @@ $(document).ready(function () {
 
     $(".result").click(function () {
         //Get votes of each candidate
-        contract.getTrumpVotes(function (err, res) {
+        contract.getCandidate1Votes(function (err, res) {
             trumpVotes = res.c[0];
         });
 
-        contract.getHillaryVotes(function (err, res) {
+        contract.getCandidate2Votes(function (err, res) {
             hillaryVotes = res.c[0];
         });
         if (trumpVotes === hillaryVotes && trumpVotes === 0) {

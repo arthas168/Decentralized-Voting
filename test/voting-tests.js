@@ -5,14 +5,14 @@ contract('Voting', function(accounts){
 
     it("should start with candidate 1 having 0 votes", function(){
         return Voting.deployed().then(function(instance){
-            return instance.getTrumpVotes();
+            return instance.getCandidate1Votes();
         }).then(function(votes){
             assert.equal(votes, 0, "Must have 0 votes");
         });
     });
     it("should start with candidate 2 having 0 votes", function(){
         return Voting.deployed().then(function(instance){
-            return instance.getHillaryVotes();
+            return instance.getCandidate2Votes();
         }).then(function(votes){
             assert.equal(votes, 0, "Must have 0 votes");
         });
