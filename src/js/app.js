@@ -1,35 +1,16 @@
 $(document).ready(function () {
+    //I know global variables are bad but I couldn't figure out something else
+    let trumpVotes = 0;
+    let hillaryVotes = 0;
+
     //contract info
-    const ContractAddress = "0x5fb6d44bbe6b5cf76c61eaf6eef2a88911153872"; //Ropsten contract address
+    const ContractAddress = "0xD2F2f0AbdF548cA02C53D87a69664783201fAdb5"; //Ropsten contract address
 
     const ContractABI = [
         {
-            "constant": true,
-            "inputs": [],
-            "name": "getHillaryVotes",
-            "outputs": [
-                {
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
             "constant": false,
             "inputs": [],
-            "name": "resetVote",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "startVote",
+            "name": "addHillaryVote",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
@@ -47,10 +28,44 @@ $(document).ready(function () {
         {
             "constant": false,
             "inputs": [],
-            "name": "addHillaryVote",
+            "name": "startVote",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getHillaryVotes",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "getIsVotingInitiated",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -66,12 +81,6 @@ $(document).ready(function () {
             "payable": false,
             "stateMutability": "view",
             "type": "function"
-        },
-        {
-            "inputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "constructor"
         }
     ];
 
@@ -80,7 +89,25 @@ $(document).ready(function () {
     //Hide divs
     $(".countdown-timer").hide();
     $(".calculating-result-div").hide();
-    $(".resetting-div").hide();
+    $(".result").hide();
+    $(".start-btn-div").hide();
+    $(".vote-ended-div").hide();
+
+    try {
+        contract.getIsVotingInitiated(function (err, res) {
+            if (res) {
+                $(".vote-ended-div").show();
+                $(".result").show();
+                $(".trump-btn").hide();
+                $(".hillary-btn").hide();
+                $(".notice").hide();
+            } else {
+                $(".start-btn-div").show();
+            }
+        });
+    }catch (e) {
+        alert("Error. Please check if you've logged into MetaMask.");
+    }
 
     //Attach Button Events
     //Invoke to start the vote
@@ -104,7 +131,7 @@ $(document).ready(function () {
                 console.log(res);
             });
         } catch (e) {
-            alert("Voting hasn't started yet!")
+            alert("Voting hasn't started yet (or you're not logged in to MetaMask)!")
         }
     });
 
@@ -116,13 +143,13 @@ $(document).ready(function () {
                 console.log(res);
             });
         } catch (e) {
-            alert("Voting hasn't started yet!")
+            alert("Voting hasn't started yet (or you're not logged in to MetaMask)!")
         }
     });
 
     function initTimer() {
         document.getElementById('timer').innerHTML =
-            "01" + ":" + "20";
+            "04" + ":" + "30";
         startTimer();
 
         function startTimer() {
@@ -194,51 +221,40 @@ $(document).ready(function () {
         $('.calculating-result-div').show();
         $(".hillary-btn").hide();
         $(".trump-btn").hide();
+        $(".notice").hide();
         initResltCalculationsTimer();
         setTimeout(returnStartButton, 60000);
     }
 
-
     function returnStartButton() {
-        getResults();
         $(".calculating-result-div").hide();
         $(".countdown-timer").hide();
-        $(".resetting-div").show();
-        resetPoints();
+        $(".result").show();
+        showEndDiv();
     }
 
-    async function getResults() {
-        let votesForTrump = 0;
-        let votesForHillary = 0;
+    $(".result").click(function () {
         //Get votes of each candidate
-        await contract.getTrumpVotes(function (err, res) {
-            votesForTrump = res.c[0];
-            console.log(res.c[0]);
+        contract.getTrumpVotes(function (err, res) {
+            trumpVotes = res.c[0];
         });
-        console.log(votesForTrump);
-        await contract.getTrumpVotes(function (err, res) {
-            votesForHillary = res.c[0];
-            console.log(res.c[0]);
+
+        contract.getHillaryVotes(function (err, res) {
+            hillaryVotes = res.c[0];
         });
-        console.log(votesForHillary);
+        if (trumpVotes === hillaryVotes && trumpVotes === 0) {
+            alert("No votes were casted.");
+        } else if (trumpVotes > hillaryVotes) {
+            alert("The winner is Donald J. Trump! Vote result is " + trumpVotes + ":" + hillaryVotes);
+        } else if (hillaryVotes > trumpVotes) {
+            alert("The winner is Hillary R. Clinton! Vote result is " + hillaryVotes + ":" + trumpVotes);
+        } else if (trumpVotes === hillaryVotes && trumpVotes > 0) {
+            alert("It's a tie! Good luck America...");
+        }
+    });
 
-        alert("trump " + votesForTrump + " : " + "hillary " + votesForHillary);
-    }
-
-    function resetPoints() {
+    function showEndDiv() {
         $(".calculating-result-div").hide();
-        contract.resetVote(function (err, res) {
-            console.log("reseted");
-            console.log(res);
-        });
-        setTimeout(showStartButton, 5000);
-    }
-
-    function showStartButton() {
-        $(".calculating-result-div").hide();
-        $(".resetting-div").hide();
-        $(".start-btn-div").show();
-        $(".trump-btn").show();
-        $(".hillary-btn").show();
+        $(".vote-ended-div").show();
     }
 });

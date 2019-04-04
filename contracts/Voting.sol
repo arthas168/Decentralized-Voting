@@ -3,8 +3,9 @@ pragma solidity ^0.5.0;
 contract Voting {
    uint256 votesForTrump = 0;
    uint256 votesForHillary = 0;
-   uint start = 0;
-   mapping(address => bool) voted;
+   uint256 start = 0;
+   bool isVotingInitiated = false;
+   mapping(address => bool) public voted;
 
    address owner;
 
@@ -23,12 +24,12 @@ contract Voting {
     }
 
     modifier VoteOngoing{
-        require(now < start + 1 minutes);
+        require(now < start + 4 minutes);
         _;
     }
 
     modifier VoteEnded{
-        require(now >= start + 1 minutes);
+        require(now >= start + 4 minutes);
         _;
     }
 
@@ -37,8 +38,14 @@ contract Voting {
         _;
     }
 
-   function startVote() OnlyOwner public{
+    modifier VoteNotStarted{
+        require(start==0);
+        _;
+    }
+
+   function startVote() OnlyOwner VoteNotStarted public{
         start = now;
+        isVotingInitiated = true;
    }
 
    function addHillaryVote() NotVoted VoteStarted VoteOngoing public{
@@ -59,8 +66,7 @@ contract Voting {
        return votesForHillary;
    }
 
-   function resetVote() OnlyOwner VoteEnded public{
-       votesForHillary = 0;
-       votesForTrump = 0;
-   }
+    function getIsVotingInitiated() public view returns(bool){
+        return isVotingInitiated;
+    }
 }
