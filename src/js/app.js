@@ -4,13 +4,13 @@ $(document).ready(function () {
     let hillaryVotes = 0;
 
     //contract info
-    const ContractAddress = "0xD2F2f0AbdF548cA02C53D87a69664783201fAdb5"; //Ropsten contract address
+    const ContractAddress = "0xEedfc6F577731b4B4D51D53fDC7c6837e6aa9A91"; //Ropsten contract address
 
     const ContractABI = [
         {
             "constant": false,
             "inputs": [],
-            "name": "addHillaryVote",
+            "name": "addCandidate1Vote",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
@@ -19,7 +19,7 @@ $(document).ready(function () {
         {
             "constant": false,
             "inputs": [],
-            "name": "addTrumpVote",
+            "name": "addCandidate2Vote",
             "outputs": [],
             "payable": false,
             "stateMutability": "nonpayable",
@@ -81,6 +81,39 @@ $(document).ready(function () {
             "payable": false,
             "stateMutability": "view",
             "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "isContractStopped",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [
+                {
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "name": "voted",
+            "outputs": [
+                {
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
         }
     ];
 
@@ -126,7 +159,7 @@ $(document).ready(function () {
     //Invoke when voter votes for candidate 1
     $(".trump-btn").click(function () {
         try {
-            contract.addTrumpVote(function (err, res) {
+            contract.addCandidate1Vote(function (err, res) {
                 console.log("voted for djt");
                 console.log(res);
             });
@@ -138,7 +171,7 @@ $(document).ready(function () {
     //Invoke when voter votes for candidate 2
     $(".hillary-btn").click(function () {
         try {
-            contract.addHillaryVote(function (err, res) {
+            contract.addCandidate2Vote(function (err, res) {
                 console.log("voted for hrc");
                 console.log(res);
             });
@@ -249,7 +282,7 @@ $(document).ready(function () {
         } else if (hillaryVotes > trumpVotes) {
             alert("The winner is Hillary R. Clinton! Vote result is " + hillaryVotes + ":" + trumpVotes);
         } else if (trumpVotes === hillaryVotes && trumpVotes > 0) {
-            alert("It's a tie! Good luck America...");
+            alert("It's a tie! Good luck America... " + trumpVotes + ":" + hillaryVotes);
         }
     });
 

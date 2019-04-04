@@ -1,4 +1,5 @@
 var Voting = artifacts.require("Voting");
+var CandidateLib = artifacts.require("CandidateLib");
 
 contract('Voting', function(accounts){
 
@@ -37,5 +38,12 @@ contract('Voting', function(accounts){
         }).then(function(balance){
             assert.equal(balance.valueOf(), false, "Value has to be false");
         });
+    });
+    it("should have stopped bool value - false", function(){
+        return Voting.deployed().then(function(instance){
+            return instance.isContractStopped();
+        }).then(function(stopped){
+            assert.equal(stopped.valueOf(), false, "Value has to be false");
+        })
     });
 });
