@@ -4,7 +4,7 @@ $(document).ready(function () {
     let hillaryVotes = 0;
 
     //contract info
-    const ContractAddress = "0xC224072c1E1C158cDd80Cba4894A481fdE75A2E8"; //Ropsten contract address
+    const ContractAddress = "0xbcdf18816180488421b0a646d0e09922a7a2b9f5"; //Ropsten contract address
 
     const ContractABI = [
         {

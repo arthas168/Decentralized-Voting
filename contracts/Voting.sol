@@ -75,13 +75,13 @@ contract Voting {
    }
 
    function addCandidate1Vote() NotVoted VoteStarted VoteOngoing stopInEmergency public {
+       voted[msg.sender] = true;
         CandidateLib.addVote(candidate1);
-        voted[msg.sender] = true;
    }
 
    function addCandidate2Vote() NotVoted VoteStarted VoteOngoing stopInEmergency public{
-       CandidateLib.addVote(candidate2);
        voted[msg.sender] = true;
+       CandidateLib.addVote(candidate2);
    }
 
    function getCandidate1Votes() VoteEnded public view returns(uint256) {

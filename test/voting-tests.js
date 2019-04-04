@@ -1,3 +1,7 @@
+/* These tests aim to ensure that the contract, after being deployed, starts off
+ with the expected values and function results. Also we're going to be using them to check
+ if the access restrictions work*/
+
 var Voting = artifacts.require("Voting");
 var CandidateLib = artifacts.require("CandidateLib");
 
