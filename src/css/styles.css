@@ -94,8 +94,8 @@ button {
     z-index: 100;
     position: absolute;
     top:6rem;
-    left: 28rem;
-    padding: .5rem;
+    left: 26rem;
+    padding: .5rem 15rem;
     background: mediumpurple;
     color: white;
     border-radius: .25rem;

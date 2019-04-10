@@ -4,7 +4,7 @@ $(document).ready(function () {
     let hillaryVotes = 0;
 
     //contract info
-    const ContractAddress = "0xbcdf18816180488421b0a646d0e09922a7a2b9f5"; //Ropsten contract address
+    const ContractAddress = "0xbCDf18816180488421B0a646D0E09922A7A2b9F5"; //Ropsten contract address
 
     const ContractABI = [
         {
@@ -268,22 +268,31 @@ $(document).ready(function () {
 
     $(".result").click(function () {
         //Get votes of each candidate
+
         contract.getCandidate1Votes(function (err, res) {
+            console.log(err, res);
+
             trumpVotes = res.c[0];
+
+            contract.getCandidate2Votes(function (err, res) {
+                console.log(err, res);
+
+                hillaryVotes = res.c[0];
+
+                console.log(trumpVotes, hillaryVotes);
+
+                if (trumpVotes === hillaryVotes && trumpVotes === 0) {
+                    alert("No votes were casted.");
+                } else if (trumpVotes > hillaryVotes) {
+                    alert("The winner is Donald J. Trump! Vote result is " + trumpVotes + ":" + hillaryVotes);
+                } else if (hillaryVotes > trumpVotes) {
+                    alert("The winner is Hillary R. Clinton! Vote result is " + hillaryVotes + ":" + trumpVotes);
+                } else if (trumpVotes === hillaryVotes && trumpVotes > 0) {
+                    alert("It's a tie! Good luck America... " + trumpVotes + ":" + hillaryVotes);
+                }
+            });
         });
 
-        contract.getCandidate2Votes(function (err, res) {
-            hillaryVotes = res.c[0];
-        });
-        if (trumpVotes === hillaryVotes && trumpVotes === 0) {
-            alert("No votes were casted.");
-        } else if (trumpVotes > hillaryVotes) {
-            alert("The winner is Donald J. Trump! Vote result is " + trumpVotes + ":" + hillaryVotes);
-        } else if (hillaryVotes > trumpVotes) {
-            alert("The winner is Hillary R. Clinton! Vote result is " + hillaryVotes + ":" + trumpVotes);
-        } else if (trumpVotes === hillaryVotes && trumpVotes > 0) {
-            alert("It's a tie! Good luck America... " + trumpVotes + ":" + hillaryVotes);
-        }
     });
 
     function showEndDiv() {

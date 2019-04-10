@@ -3,4 +3,4 @@ The contract is deployed on the Ropsten Test Network and works pretty well with 
 The address of the Candidate Library is "0x71441B910764224F0D0B5483CE116014C145c31e";
 The address of the Voting contract is "0xbcdf18816180488421b0a646d0e09922a7a2b9f5";
 
-Notice: the addresses may very well change before or during the project defense.
+Notice: the addresses will change before or during the project defense.
